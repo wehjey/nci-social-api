@@ -31,7 +31,20 @@ class RegisterRequest extends FormRequest
             'email' => 'required|email|unique:users',
             'phone_number' => 'required|unique:users',
             'profile_url' => 'image|mimes:jpeg,bmp,jpg,png|between:1, 5000',
-            'password' => 'required|confirmed'
+            'password' => 'required|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-_]).{8,}$/'
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'password.regex' => 'Your password must be at least 8 characters long, should contain at least 1 Uppercase, 1 Lowercase, 1 Numeric and 1 special character(#?!@$%^&*-
+_)',
         ];
     }
 
@@ -40,13 +53,6 @@ class RegisterRequest extends FormRequest
      */
     protected function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response()->json(
-            [
-                'status' => 422,
-                'success' => false,
-                'message' => 'Please fill in all required fields',
-                'errors' => $validator->errors()
-            ]
-        , 422));
+        throw new HttpResponseException(errorResponse(422, 'Please fill in all required fields', $validator->errors()));
     }
 }
