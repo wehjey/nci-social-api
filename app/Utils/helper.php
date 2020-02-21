@@ -21,7 +21,7 @@ function tokenResponse($token, $user, $status_code)
         'data' => $user,
         'token_type'   => 'bearer',
         'expires_in'   => auth('api')->factory()->getTTL() * 60
-  ]);
+  ], $status_code);
 }
 
 /**
@@ -32,13 +32,14 @@ function tokenResponse($token, $user, $status_code)
  *
  * @return json token response
  */
-function errorResponse($status_code, $message)
+function errorResponse($status_code, $message, $errors=[])
 {
     return response()->json([
         'status' => $status_code,
         'success' => false,
-        'message' => $message
-  ]);
+        'message' => $message,
+        'errors' => $errors
+    ], $status_code);
 }
 
 

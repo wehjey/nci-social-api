@@ -36,13 +36,6 @@ class LoginRequest extends FormRequest
      */
     protected function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response()->json(
-            [
-                'status' => 422,
-                'success' => false,
-                'message' => 'Please fill in all required fields',
-                'errors' => $validator->errors()
-            ]
-        , 422));
+        throw new HttpResponseException(errorResponse(422, 'Please fill in all required fields', $validator->errors()));
     }
 }
