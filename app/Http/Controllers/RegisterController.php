@@ -28,7 +28,7 @@ class RegisterController extends Controller
             ]
         );
         $token = auth()->login($user); // Get user api token
-        return tokenResponse($token, $user);
+        return tokenResponse($token, $user, 201);
     }
 
 }

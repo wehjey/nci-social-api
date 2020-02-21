@@ -5,15 +5,16 @@ use JD\Cloudder\Facades\Cloudder;
 /**
  * Returns json data after registration
  * 
- * @param string $token user api token
- * @param collection  $user user collect
+ * @param string     $token user api token
+ * @param collection $user user collect
+ * @param int        $status_code http status code
  *
  * @return json token response
  */
-function tokenResponse($token,$user)
+function tokenResponse($token, $user, $status_code)
 {
   return response()->json([
-        'status' => 201,
+        'status' => $status_code,
         'success' => true,
         'message' => 'Account created successfully',
         'access_token' => $token,
@@ -22,6 +23,24 @@ function tokenResponse($token,$user)
         'expires_in'   => auth('api')->factory()->getTTL() * 60
   ]);
 }
+
+/**
+ * Returns json data after registration
+ *
+ * @param int        $status_code http status code
+ * @param string     $message error message
+ *
+ * @return json token response
+ */
+function errorResponse($status_code, $message)
+{
+    return response()->json([
+        'status' => $status_code,
+        'success' => false,
+        'message' => $message
+  ]);
+}
+
 
 /**
  * Upload profile image to cloudinary API
