@@ -24,6 +24,7 @@ class RegisterController extends Controller
                 'phone_number' => $request['phone_number'],
                 'email'    => $request['email'],
                 'password' => bcrypt($request['password']),
+                'profile_url' => uploadImage($request),
             ]
         );
         $token = auth()->login($user); // Get user api token

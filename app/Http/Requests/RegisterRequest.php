@@ -30,7 +30,7 @@ class RegisterRequest extends FormRequest
             'lastname' => 'required',
             'email' => 'required|email|unique:users',
             'phone_number' => 'required|unique:users',
-            'profile_url' => 'image',
+            'profile_url' => 'image|mimes:jpeg,bmp,jpg,png|between:1, 5000',
             'password' => 'required|confirmed'
         ];
     }
