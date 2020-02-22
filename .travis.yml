@@ -1,9 +1,9 @@
-dist: precise
+dist: xenial
 language: php
 php:
   - 7.3
-addons:
-  mariadb: 10.4
+services:
+  - mysql
 
 cache:
   directories:
