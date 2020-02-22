@@ -37,7 +37,7 @@ class TopicController extends Controller
      */
     public function show(Topic $topic)
     {
-        //
+        return resourceCreatedResponse($topic, 'Resource returned', 200);
     }
 
     /**

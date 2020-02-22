@@ -30,6 +30,7 @@ Route::prefix('v1')->group(function () {
          * Topic routes
          */
         Route::post('topic', 'TopicController@store');
+        Route::get('topic/{topic}', 'TopicController@show');
 
     });
 });

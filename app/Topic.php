@@ -12,6 +12,10 @@ class Topic extends Model
         'title', 'description', 'hashtag', 'user_id'
     ];
 
+    protected $with = [
+        'images'
+    ];
+
     /**
      * Topic belongs to a user
      *
