@@ -37,7 +37,7 @@ class TopicController extends Controller
      */
     public function show(Topic $topic)
     {
-        return resourceCreatedResponse($topic, 'Resource returned', 200);
+        return resourceCreatedResponse($topic, 'Topic returned successfully', 200);
     }
 
     /**
@@ -60,6 +60,12 @@ class TopicController extends Controller
      */
     public function destroy(Topic $topic)
     {
-        //
+        if ($topic->user_id != auth()->id()) {
+            return errorResponse(401, 'Permission denied');
+        }
+
+        $topic->delete();
+
+        return resourceCreatedResponse([], 'Topic deleted successfully', 200);
     }
 }

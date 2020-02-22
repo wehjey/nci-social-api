@@ -17,7 +17,7 @@ class CreateTopicImagesTable extends Migration
             $table->bigIncrements('id');
             $table->string('image_url');
             $table->unsignedBigInteger('topic_id');
-            $table->foreign('topic_id')->references('id')->on('topics');
+            $table->foreign('topic_id')->references('id')->on('topics')->onDelete('cascade');
             $table->timestamps();
         });
     }

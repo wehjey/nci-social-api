@@ -1,8 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
-
-/*
+/**
 |--------------------------------------------------------------------------
 | API Routes
 |--------------------------------------------------------------------------
@@ -31,6 +29,8 @@ Route::prefix('v1')->group(function () {
          */
         Route::post('topic', 'TopicController@store');
         Route::get('topic/{topic}', 'TopicController@show');
+        Route::delete('topic/{topic}', 'TopicController@destroy');
 
     });
+
 });
