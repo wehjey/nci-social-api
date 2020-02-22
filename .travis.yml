@@ -1,4 +1,4 @@
-dist: bionic
+dist: precise
 language: php
 php:
   - 7.3
