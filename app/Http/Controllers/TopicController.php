@@ -14,7 +14,8 @@ class TopicController extends Controller
      */
     public function index()
     {
-        //
+        $topics = Topic::where('user_id', auth()->id())->orderBy('id', 'desc')->paginate(50);
+        return resourceResponse($topics, 'Topics returned successfully', 200);
     }
 
     /**

@@ -27,6 +27,7 @@ Route::prefix('v1')->group(function () {
         /**
          * Topic routes
          */
+        Route::get('topics', 'TopicController@index');
         Route::post('topic', 'TopicController@store');
         Route::get('topic/{topic}', 'TopicController@show');
         Route::delete('topic/{topic}', 'TopicController@destroy');
