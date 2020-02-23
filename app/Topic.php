@@ -54,7 +54,10 @@ class Topic extends Model
             ]
         );
 
-        self::saveImages($data, $topic);
+        // Save images if user uploaded
+        if (isset($data['images'])) {
+            self::saveImages($data, $topic);
+        }
 
         return $topic;
     }

@@ -28,7 +28,7 @@ class TopicRequest extends FormRequest
         return [
             'title' => 'required|max:100',
             'description' => 'required',
-            'images' => 'min:1|max:4',
+            'images' => 'max:4',
             'images.*' => 'image|mimes:jpeg,bmp,jpg,png|between:1, 5000',
         ];
     }
