@@ -32,6 +32,14 @@ Route::prefix('v1')->group(function () {
         Route::get('topic/{topic}', 'TopicController@show');
         Route::delete('topic/{topic}', 'TopicController@destroy');
 
+        /**
+         * Comment routes
+         */
+        Route::get('comments/{topic}', 'CommentController@index');
+        Route::post('comment/{topic}', 'CommentController@store');
+        Route::get('comment/{comment}', 'CommentController@show');
+        Route::delete('comment/{comment}', 'CommentController@destroy');
+
     });
 
 });
