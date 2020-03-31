@@ -229,4 +229,8 @@ return [
         'Cloudder' => JD\Cloudder\Facades\Cloudder::class,
     ],
 
+    // Paystack variables
+    'ps_secret' => env('PAYSTACK_SECRET_KEY'),
+    'ps_url' => env('PAYSTACK_PAYMENY_URL'),
+
 ];

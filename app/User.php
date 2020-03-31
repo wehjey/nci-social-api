@@ -48,8 +48,23 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
+    /**
+     * A user has many topics
+     *
+     * @return collection
+     */
     public function topics()
     {
         return $this->hasMany(Topic::class);
+    }
+
+    /**
+     * A user can have many products
+     *
+     * @return collection
+     */
+    public function products()
+    {
+        return $this->hasMany(Product::class);
     }
 }
