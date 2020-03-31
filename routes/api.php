@@ -53,6 +53,12 @@ Route::prefix('v1')->group(function () {
         Route::get('products', 'ProductController@index');
         Route::delete('product/{product}', 'ProductController@destroy');
         Route::post('order', 'ProductController@order');
+
+
+        /**
+         * Category
+         */
+        Route::get('categories', 'CategoryController@index');
     });
 
 });

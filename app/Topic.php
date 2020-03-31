@@ -39,6 +39,16 @@ class Topic extends Model
     /**
      * Undocumented function
      *
+     * @return object
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    /**
+     * Undocumented function
+     *
      * @param array $data Request data
      * 
      * @return object
