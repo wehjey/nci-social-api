@@ -14,7 +14,7 @@ class AddStatusToTransactions extends Migration
     public function up()
     {
         Schema::table('transactions', function (Blueprint $table) {
-            $table->string('status');
+            $table->string('status')->nullable();
         });
     }
 
