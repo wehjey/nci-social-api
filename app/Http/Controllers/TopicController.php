@@ -14,7 +14,12 @@ class TopicController extends Controller
      */
     public function index()
     {
-        $topics = Topic::where('user_id', auth()->id())->orderBy('id', 'desc')->paginate(50);
+        $topics = Topic::query();
+        // Check if filter exists to list topics by created user only
+        if (request()->has('type') && request()['type'] == 'owner') {
+            $topics->where('user_id', auth()->id());
+        }
+        $topics = $topics->where('user_id', auth()->id())->orderBy('id', 'desc')->paginate(perPage());
         return resourceResponse($topics, 'Topics returned successfully', 200);
     }
 
