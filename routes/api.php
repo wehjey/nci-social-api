@@ -20,6 +20,11 @@ Route::prefix('v1')->group(function () {
     Route::post('login', 'LoginController@login');
 
     /**
+     * Payment route
+     */
+    Route::get('payment/callback', 'PaymentController@gatewayCallback');
+
+    /**
      * Authenticated routes
      */
     Route::middleware('auth:api')->group(function () {
@@ -40,6 +45,14 @@ Route::prefix('v1')->group(function () {
         Route::get('comment/{comment}', 'CommentController@show');
         Route::delete('comment/{comment}', 'CommentController@destroy');
 
+        /**
+         * Market Place routes
+         */
+        Route::post('product', 'ProductController@create');
+        Route::get('product/{product}', 'ProductController@show');
+        Route::get('products', 'ProductController@index');
+        Route::delete('product/{product}', 'ProductController@destroy');
+        Route::post('order', 'ProductController@order');
     });
 
 });
