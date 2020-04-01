@@ -19,7 +19,7 @@ class CommentController extends Controller
      */
     public function index(Topic $topic)
     {
-        $comments = Comment::where('topic_id', $topic->id)->paginate(perPage());
+        $comments = Comment::where('topic_id', $topic->id)->orderBy('id', 'desc')->with('user')->paginate(perPage());
         return resourceResponse($comments, 'Comments returned successfully', 200);
     }
 
