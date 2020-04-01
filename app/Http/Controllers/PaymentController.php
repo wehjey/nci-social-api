@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Libraries\Payment;
 use App\Transaction;
 use App\Product;
+use App\Jobs\SendEmail;
 
 class PaymentController extends Controller
 {
@@ -45,7 +46,9 @@ class PaymentController extends Controller
         $product->quantity = $product->quantity - $transaction->quantity;
         $product->save();
 
-        return resourceCreatedResponse([], 'Order completed successfully', 200);
+        SendEmail::dispatch($product, $transaction);
+
+        return redirect()->to('http://localhost:8000?success=true'); // redirect back to frontend
     }
 
 }
