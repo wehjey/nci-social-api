@@ -47,6 +47,16 @@ class Product extends Model
     }
 
     /**
+     * Product has many transactions
+     *
+     * @return object
+     */
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
+    /**
      * Create new product
      *
      * @param [type] $data

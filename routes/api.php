@@ -51,14 +51,20 @@ Route::prefix('v1')->group(function () {
         Route::post('product', 'ProductController@create');
         Route::get('product/{product}', 'ProductController@show');
         Route::get('products', 'ProductController@index');
+        Route::get('products/category/{category_id}', 'ProductController@getCategoryProducts');
         Route::delete('product/{product}', 'ProductController@destroy');
         Route::post('order', 'ProductController@order');
+        Route::get('orders', 'ProductController@myOrders');
+        Route::get('sales', 'ProductController@mySales');
 
 
         /**
          * Category
          */
         Route::get('categories', 'CategoryController@index');
+
+        //Profile
+        Route::post('profile', 'RegisterController@updateProfile');
     });
 
 });
