@@ -10,6 +10,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
 use App\User;
 use App\Mail\OrderMail;
+use App\Mail\NotifySeller;
 
 class SendEmail implements ShouldQueue
 {
@@ -37,6 +38,8 @@ class SendEmail implements ShouldQueue
     public function handle()
     {
         $user = User::find($this->transaction->buyer_id);
+        $seller = User::find($this->transaction->user_id);
         Mail::to($user->email)->send(new OrderMail($this->product, $this->transaction, $user));
+        Mail::to($seller->email)->send(new NotifySeller($this->product, $this->transaction, $seller, $buyer));
     }
 }

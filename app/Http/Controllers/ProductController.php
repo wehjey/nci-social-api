@@ -24,9 +24,11 @@ class ProductController extends Controller
         // Check if filter exists to list products by created user only
         if (request()->has('type') && request()['type'] == 'owner') {
             $products->where('user_id', auth()->id());
+        } else {
+            $products->where('quantity', '>', 0);
         }
 
-        $products = $products->where('quantity', '>', 0)->orderBy('id', 'desc')->paginate(perPage());
+        $products = $products->orderBy('id', 'desc')->with('category')->withCount('transactions')->paginate(perPage());
         return resourceResponse($products, 'Products returned successfully', 200);
     }
 
@@ -50,7 +52,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return resourceCreatedResponse($product, 'Product returned successfully', 200);
+        return resourceCreatedResponse($product->load('category'), 'Product returned successfully', 200);
     }
 
     /**
@@ -93,5 +95,49 @@ class ProductController extends Controller
         }
 
         return resourceCreatedResponse($response['payment_url'], 'Payment URL for purchase', 200);
+    }
+
+    /**
+     * Get all products bought
+     *
+     * @return void
+     */
+    public function myOrders()
+    {
+        $trans = Transaction::where('buyer_id', auth()->id())
+        ->where('status', 'paid')
+        ->orderBy('id', 'desc')
+        ->with('product')
+        ->with('user')
+        ->get();
+        return resourceCreatedResponse($trans, 'Orders return successfully', 200);
+    }
+
+    /**
+     * Get all products sold
+     *
+     * @return void
+     */
+    public function mySales()
+    {
+        $trans = Transaction::where('user_id', auth()->id())
+        ->where('status', 'paid')
+        ->orderBy('id', 'desc')
+        ->with('buyer')
+        ->with('product')->get();
+        return resourceCreatedResponse($trans, 'Sales return successfully', 200);
+    }
+
+    public function getCategoryProducts($category_id)
+    {
+        if(!isset($category_id)) {
+            return errorResponse(404, 'Please select category');
+        }
+
+        $products = Product::where('quantity', '>', 0)
+        ->where('category_id', $category_id)
+        ->orderBy('id', 'desc')
+        ->with('category')->withCount('transactions')->paginate(perPage());
+        return resourceResponse($products, 'Products returned successfully', 200);
     }
 }

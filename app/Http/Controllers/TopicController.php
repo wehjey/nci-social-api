@@ -19,7 +19,7 @@ class TopicController extends Controller
         if (request()->has('type') && request()['type'] == 'owner') {
             $topics->where('user_id', auth()->id());
         }
-        $topics = $topics->where('user_id', auth()->id())->orderBy('id', 'desc')->with('user')->withCount('comments')->paginate(perPage());
+        $topics = $topics->orderBy('id', 'desc')->with('user')->withCount('comments')->paginate(perPage());
         return resourceResponse($topics, 'Topics returned successfully', 200);
     }
 

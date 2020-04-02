@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\ProfileRequest;
 use App\User;
 
 class RegisterController extends Controller
@@ -27,8 +28,26 @@ class RegisterController extends Controller
                 'profile_url' => uploadImage($request, 'profile_url'),
             ]
         );
-        $token = auth()->login($user); // Get user api token
+        $token = auth()->login($user, true); // Get user api token
         return tokenResponse($token, $user, 201);
+    }
+
+    /**
+     * Update profile
+     * 
+     * @param object $request contains http request
+     * 
+     * @return json
+     */
+    public function updateProfile(ProfileRequest $request)
+    {
+        $user = User::find(auth()->id());
+        $user->firstname = $request['firstname'];
+        $user->lastname = $request['lastname'];
+        $user->phone_number = $request['phone_number'];
+        $user->profile_url = uploadImage($request, 'profile_url');
+        $user->save();
+        return resourceCreatedResponse($user, 'Profile updated successfully', 200);
     }
 
 }
