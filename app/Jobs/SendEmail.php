@@ -40,6 +40,6 @@ class SendEmail implements ShouldQueue
         $user = User::find($this->transaction->buyer_id);
         $seller = User::find($this->transaction->user_id);
         Mail::to($user->email)->send(new OrderMail($this->product, $this->transaction, $user));
-        Mail::to($seller->email)->send(new NotifySeller($this->product, $this->transaction, $seller, $buyer));
+        Mail::to($seller->email)->send(new NotifySeller($this->product, $this->transaction, $seller, $user));
     }
 }
