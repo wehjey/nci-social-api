@@ -48,7 +48,7 @@ class PaymentController extends Controller
 
         SendEmail::dispatch($product, $transaction);
 
-        return redirect()->to('http://ncis-front.herokuapp.com?success=true'); // redirect back to frontend
+        return redirect()->to('http://ncis-front.herokuapp.com/my/orders?success=true'); // redirect back to frontend
     }
 
 }
