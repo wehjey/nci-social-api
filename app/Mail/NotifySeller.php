@@ -37,6 +37,6 @@ class NotifySeller extends Mailable
     public function build()
     {
         return $this->view('emails.seller')
-                    ->subject('Product');
+                    ->subject('Product Sold');
     }
 }
