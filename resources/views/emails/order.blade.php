@@ -4,7 +4,7 @@
 	<title>Order Completed</title>
 </head>
 <body>
-<p>Hi, {{$user->firstname}},</p>
+<p>Hi {{ucwords($user->firstname)}},</p>
 <p>Your order has been completed successfully.</p>
 <p>Details:</p>
 <p>
