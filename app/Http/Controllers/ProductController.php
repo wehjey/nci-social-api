@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProductRequest;
 use App\Http\Requests\OrderRequest;
+use App\Http\Requests\EditProductRequest;
 use App\Product;
 use App\Transaction;
 use App\Libraries\Payment;
@@ -40,8 +41,24 @@ class ProductController extends Controller
      */
     public function create(ProductRequest $request)
     {
-        $topic = Product::addNew($request->only(['name', 'description', 'price', 'quantity', 'category_id', 'images']));
-        return resourceCreatedResponse($topic, 'Product created successfully', 201);
+        $product = Product::addNew($request->only(['name', 'description', 'price', 'quantity', 'category_id', 'images']));
+        return resourceCreatedResponse($product, 'Product created successfully', 201);
+    }
+
+    /**
+     * Edit product
+     *
+     * @param EditProductRequest $request
+     * @return json
+     */
+    public function update(EditProductRequest $request, Product $product)
+    {
+        if ($product->user_id != auth()->id()) {
+            return errorResponse(401, 'Permission denied');
+        }
+
+        $product = Product::edit($request->only(['product_id', 'name', 'description', 'price', 'quantity', 'category_id', 'images']));
+        return resourceCreatedResponse($product, 'Product updated successfully', 200);
     }
 
     /**
