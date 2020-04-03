@@ -82,6 +82,30 @@ class Product extends Model
     }
 
     /**
+     * Update product
+     *
+     * @param [type] $data
+     * @return void
+     */
+    public static function edit($data)
+    {
+        $product = self::find($data['product_id']);
+        $product->name = $data['name'];
+        $product->description = $data['description'];
+        $product->price = $data['price'];
+        $product->quantity = $data['quantity'];
+        $product->category_id = $data['category_id'];
+        $product->save();
+
+        // Save images if user uploaded
+        if (isset($data['images'])) {
+            $product->images()->delete(); // Remove old images
+            self::saveImages($data, $product);
+        }
+        return $product;
+    }
+
+    /**
      * Save product images to cloudinary API
      * 
      * @param array  $data  Request data

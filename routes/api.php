@@ -49,6 +49,7 @@ Route::prefix('v1')->group(function () {
          * Market Place routes
          */
         Route::post('product', 'ProductController@create');
+        Route::post('product/edit/{product}', 'ProductController@update');
         Route::get('product/{product}', 'ProductController@show');
         Route::get('products', 'ProductController@index');
         Route::get('products/category/{category_id}', 'ProductController@getCategoryProducts');
@@ -65,6 +66,12 @@ Route::prefix('v1')->group(function () {
 
         //Profile
         Route::post('profile', 'RegisterController@updateProfile');
+
+        /**
+         * Book API
+         */
+        Route::get('books/new', 'BookController@newBooks');
+        Route::post('books/search', 'BookController@searchBooks');
     });
 
 });
