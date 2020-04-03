@@ -45,7 +45,10 @@ class RegisterController extends Controller
         $user->firstname = $request['firstname'];
         $user->lastname = $request['lastname'];
         $user->phone_number = $request['phone_number'];
-        $user->profile_url = uploadImage($request, 'profile_url');
+        // Save images if user uploaded
+        if (isset($request['profile_url'])) {
+            $user->profile_url = uploadImage($request, 'profile_url');
+        }
         $user->save();
         return resourceCreatedResponse($user, 'Profile updated successfully', 200);
     }
