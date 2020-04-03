@@ -60,6 +60,30 @@ function resourceResponse($data, $message, $status_code)
  *
  * @return json resource response
  */
+function bookResourceResponse($data, $message, $status_code)
+{
+    return response()->json([
+            'status' => $status_code,
+            'success' => true,
+            'message' => $message,
+            'per_page' => 10,
+            'item_count' => 10,
+            'total_count' => (int) $data['total'],
+            'data' => $data['books'],
+            'prev_page' => '',
+            'next_page' => ''
+    ], $status_code);
+}
+
+/**
+ * Returns resource data json
+ * 
+ * @param collection $data         Resource data
+ * @param string     $message      Response
+ * @param int        $status_code  HTTP status code
+ *
+ * @return json resource response
+ */
 function resourceCreatedResponse($data, $message, $status_code)
 {
     return response()->json([
@@ -195,3 +219,39 @@ function generateRandomString($length = 10)
     return $randomString;
 }
 
+function makeRequest($data, $url, $method)
+{
+    $curl = curl_init();
+
+    $headers = [
+        "content-type: application/json",
+        "cache-control: no-cache"
+    ];
+    
+    // Add authorisation token if request requires authentication
+    if (session('token')) {
+        $headers = array_merge(
+            $headers,
+            ['authorization: Bearer ' . session('token')]
+        );
+    }
+    
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => $url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_CUSTOMREQUEST => $method,
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        )
+    );
+    
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+    
+    if($err){
+        // there was an error contacting the Paystack API
+        die('Curl returned error: ' . $err);
+    }
+
+    return json_decode($response, true);
+}
